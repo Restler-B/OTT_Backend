@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.MovieDetails;
 
 public interface MovieDetailsRepository extends JpaRepository<MovieDetails, Integer>{
-	  List<MovieDetails> findMovieBygenreId(int genreId);
-//	  List<MovieDetails> findById(Long movieId);
+//	  List<MovieDetails> findMovieBygenreId(int genreId);
+//	  List<MovieDetails> findBymovieId(Long movieId);
 
 	
 

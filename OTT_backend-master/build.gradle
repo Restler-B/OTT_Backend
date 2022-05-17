@@ -20,6 +20,10 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation("com.google.guava:guava:24.0-jre")
+    implementation 'javax.mail:javax.mail-api:1.6.2'
+    implementation group: 'org.springframework', name: 'spring-context-support'
+    
 }
 
 tasks.named('test') {

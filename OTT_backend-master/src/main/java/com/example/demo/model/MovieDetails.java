@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -18,24 +20,29 @@ public class MovieDetails {
 		          CascadeType.PERSIST,
 		          CascadeType.MERGE
 		      })
-    @JoinTable(name = "movie_genres",
+    @JoinTable(name = "movie_genres",schema = "movie_detail",
 		      joinColumns = { @JoinColumn(name = "movie_id") },
 		      inverseJoinColumns = { @JoinColumn(name = "genre_id") })
 	private Set<Genre> genres = new HashSet<>();
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	
+//	@Column(name = "id")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Integer id;
 	
 	@Column(name = "movie_name")
+	@NotBlank
 	private String movie_name;
 	
-	
+	@Id
+	@NotNull
 	@Column(name = "movie_id")
-	private Integer movie_id;
+	private Integer movieId;
+	
+	
 	
 	@Column(name = "movie_title")
+	@NotBlank
 	private String movie_title;
 	
 	@Column(name = "movie_description")
@@ -54,19 +61,31 @@ public class MovieDetails {
 	@Column(name = "m_popularity")
 	private Integer m_popularity;
 	
-	@Column(name = "m_duration")
-	private Time m_duration;
+	@Column(name = "poster_path")
+	@NotBlank
+	private String posterPath;
 	
-	@Column(name = "genre_id")
-	private Integer genreId;
+	@Column(name = "backdrop_path")
+	@NotBlank
+	private String backdropPath;
+	
+	@Column(name = "media_path")
+	@NotBlank
+	private String mediaPath;
+	
+//	@Column(name = "m_duration")
+//	private Time m_duration;
+//	
+//	@Column(name = "genre_id")
+//	private Integer genreId;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+//	public Integer getId() {
+//		return id;
+//	}
+//
+//	public void setId(Integer id) {
+//		this.id = id;
+//	}
 
 	public String getMovie_name() {
 		return movie_name;
@@ -77,11 +96,11 @@ public class MovieDetails {
 	}
 
 	public Integer getMovie_id() {
-		return movie_id;
+		return movieId;
 	}
 
 	public void setMovie_id(Integer movie_id) {
-		this.movie_id = movie_id;
+		this.movieId = movie_id;
 	}
 
 	public String getMovie_title() {
@@ -132,21 +151,21 @@ public class MovieDetails {
 		this.m_popularity = m_popularity;
 	}
 
-	public Time getM_duration() {
-		return m_duration;
-	}
-
-	public void setM_duration(Time m_duration) {
-		this.m_duration = m_duration;
-	}
-
-	public Integer getGenre_id() {
-		return genreId;
-	}
-
-	public void setGenre_id(Integer genre_id) {
-		this.genreId = genre_id;
-	}
+//	public Time getM_duration() {
+//		return m_duration;
+//	}
+//
+//	public void setM_duration(Time m_duration) {
+//		this.m_duration = m_duration;
+//	}
+//
+//	public Integer getGenre_id() {
+//		return genreId;
+//	}
+//
+//	public void setGenre_id(Integer genre_id) {
+//		this.genreId = genre_id;
+//	}
 	
 	
 	public void addGenre(Genre _genre) {
@@ -161,5 +180,30 @@ public class MovieDetails {
 	      genre.getMovies().remove(this);
 	    }
 	  }
+
+	public String getPosterPath() {
+		return posterPath;
+	}
+
+	public void setPosterPath(String posterPath) {
+		this.posterPath = posterPath;
+	}
+
+	public String getBackdrop_path() {
+		return backdropPath;
+	}
+
+	public void setBackdrop_path(String backdrop_path) {
+		this.backdropPath = backdrop_path;
+	}
+
+	public String getMedia_path() {
+		return mediaPath;
+	}
+
+	public void setMedia_path(String media_path) {
+		this.mediaPath = media_path;
+	}
+	
 	
 }

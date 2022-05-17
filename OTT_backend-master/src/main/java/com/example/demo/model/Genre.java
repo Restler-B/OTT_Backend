@@ -17,8 +17,8 @@ public class Genre {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "movie_id")
-	private Integer movieId;
+//	@Column(name = "movie_id")
+//	private Integer movieId;
 	
 	@Column(name = "movie_genre")
 	private String movie_genre;
@@ -44,13 +44,13 @@ public class Genre {
 		this.id = id;
 	}
 
-	public Integer getMovie_id() {
-		return movieId;
-	}
-
-	public void setMovie_id(Integer movie_id) {
-		this.movieId = movie_id;
-	}
+//	public Integer getMovie_id() {
+//		return movieId;
+//	}
+//
+//	public void setMovie_id(Integer movie_id) {
+//		this.movieId = movie_id;
+//	}
 
 	public String getMovie_genre() {
 		return movie_genre;

@@ -9,5 +9,5 @@ import com.example.demo.model.Genre;
 public interface GenreRepository extends JpaRepository<Genre, Integer> {
 //	  List<Genre> findGenreByMovieId(Long movieId);
 
-	List<Genre> findGenreBymovieId(Integer movieId);
+//	List<Genre> findGenreBymovieId(Integer movieId);
 }

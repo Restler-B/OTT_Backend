@@ -11,6 +11,7 @@ import com.example.demo.service.MovieService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.web.client.HttpClientErrorException.NotFound;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(value = "/movies/")
 @RestController
 public class MovieController {
@@ -55,7 +56,7 @@ public class MovieController {
 		return "Movie Deleted";
 	};
 	
-	@DeleteMapping(value = "movies/delete_allmovies")
+	@DeleteMapping(value = "delete_allmovies")
 	public String deleteAll() {
 		movieService.deleteAll();
 		return "Movies Deleted";
@@ -66,10 +67,10 @@ public class MovieController {
 		return movieService.findById(movie_id);
 	};
 	
-	@GetMapping(value = "get_genre/{movie_id}")
-	public Optional<Genre> findGenre(@PathVariable int movie_id) {
-		return movieService.findGenre(movie_id);
-	}
+//	@GetMapping(value = "get_genre/{movie_id}")
+//	public Optional<Genre> findGenre(@PathVariable int movie_id) {
+//		return movieService.findGenre(movie_id);
+//	}
 	
 	@PostMapping(value = "add_genre")
 	public String saveGenre(@RequestBody Genre genre) {
