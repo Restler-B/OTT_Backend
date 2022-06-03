@@ -55,24 +55,21 @@ public class OtpController {
 		return OTP;
 	}
 	
-	 @PostMapping("auth/otp_login")
+	 @PostMapping("auth/password_reset")
 	  public ResponseEntity<?> authenticateUser(@Valid @RequestBody OtpRequest otpRequest ) {
 	    Boolean email = userRepo.existsByEmail(otpRequest.getEmail());
 	    Boolean otp = userRepo.existsByOneTimePassword(otpRequest.getOneTimePassword());
 		if(email & otp == true){
-			return ResponseEntity.ok(new MessageResponse("Success!!"));
+			User user = userRepo.findByEmail(otpRequest.getEmail());
+			user.setPassword(passwordEncoder.encode(otpRequest.getPassword()));
+			userRepo.save(user);
+			otpService.clearOTP(user);
+			return ResponseEntity.ok(new MessageResponse("Password changed succesfully!"));
 		}else {
 			
 			return ResponseEntity.ok(new MessageResponse("Credentials Mismatch!"));
 		}
 	 }
 	 
-		@PostMapping("auth/reset_password")
-		public void resetPassword( @RequestBody  OtpRequest reset ) {
-			User user = userRepo.findByEmail(reset.getEmail());
-			user.setPassword(passwordEncoder.encode(reset.getPassword()));
-			userRepo.save(user);
-			System.out.println(reset);
-		}
 	  
 }

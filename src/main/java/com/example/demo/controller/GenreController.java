@@ -105,7 +105,7 @@ public class GenreController {
 //	  Ok
 //	  Add Genres to existing movies
 	  @PostMapping("/{movieId}/genres")
-	  public ResponseEntity<Genre> addGenre(@PathVariable(value = "movieId") int movieId, @RequestBody Genre genreRequest) throws MovieNotFoundException, GenreNotFoundException{
+	  public ResponseEntity<Genre> addGenre(@PathVariable(value = "movieId") long movieId, @RequestBody Genre genreRequest) throws MovieNotFoundException, GenreNotFoundException{
 		  Genre genre = movieDetailsRepository.findById(movieId).map(movie -> {
 			  Integer genreId = genreRequest.getId();
 		      // Genre is existed
@@ -133,7 +133,7 @@ public class GenreController {
 	  
 	  
 	  @PostMapping("/mapGenre/{movieId}")
-	  public void mapGenre(@PathVariable(value = "movieId") int movieId, @RequestBody List<Integer> genreRequest) throws MovieNotFoundException, GenreNotFoundException {
+	  public void mapGenre(@PathVariable(value = "movieId") long movieId, @RequestBody List<Integer> genreRequest) throws MovieNotFoundException, GenreNotFoundException {
 		  MovieDetails movie = movieDetailsRepository.findById(movieId)
 				  .orElseThrow(()-> new GenreNotFoundException("Not Found genre with Id: " + movieId));
 		  genreRequest.forEach((Integer id)->{
@@ -164,7 +164,7 @@ public class GenreController {
 	  }
 	 
 	  @DeleteMapping("/{movieId}/genres/{genreId}")
-	  public ResponseEntity<HttpStatus> deleteGenreFromMovie(@PathVariable(value = "movieId") Integer movieId, @PathVariable(value = "genreId") Long genreId) throws MovieNotFoundException {
+	  public ResponseEntity<HttpStatus> deleteGenreFromMovie(@PathVariable(value = "movieId") long movieId, @PathVariable(value = "genreId") Long genreId) throws MovieNotFoundException {
 	    MovieDetails movie = movieDetailsRepository.findById(movieId)
 	        .orElseThrow(() -> new MovieNotFoundException("Not found Movie with id = " + movieId));
 	    

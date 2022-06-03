@@ -9,8 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.Genre;
 import com.example.demo.model.MovieDetails;
 
-public interface MovieDetailsRepository extends JpaRepository<MovieDetails, Integer>{
+public interface MovieDetailsRepository extends JpaRepository<MovieDetails, Long>{
 
 	Optional<Genre> findBymovieId(int movieId);
+
+	Boolean existsById(long movie_id);
 
 }

@@ -28,7 +28,7 @@ public class MovieService {
 
 	public ResponseEntity<?> save(MovieDetails movieDetails) {
 		System.out.println("***"+movieDetails.getMovie_id());
-		int movie_id = movieDetails.getMovie_id();
+		Long movie_id = movieDetails.getMovie_id();
 		Boolean movie = movieDetailsService.existsById(movie_id);
 		System.out.println(movie);
 		if (!movie) {
@@ -39,7 +39,7 @@ public class MovieService {
 	}
 	
 	public ResponseEntity<?> updateMovie(MovieDetails movieDetails) throws MovieNotFoundException{
-		int movie_id = movieDetails.getMovie_id();
+		Long movie_id = movieDetails.getMovie_id();
 		if (movieDetailsService.existsById(movie_id)) {
 			movieDetailsService.save(movieDetails);
 			return new ResponseEntity<>(movieDetails, HttpStatus.OK);
@@ -54,9 +54,9 @@ public class MovieService {
 	}
 
 	public String deleteMovie(int movie_id) throws MovieNotFoundException {
-		Boolean md = movieDetailsService.existsById(movie_id);
+		Boolean md = movieDetailsService.existsById((long) movie_id);
 		if (md == true) {
-			movieDetailsService.deleteById(movie_id);
+			movieDetailsService.deleteById((long) movie_id);
 			return "Deleted Successfully";
 		}
 		else {
@@ -69,7 +69,7 @@ public class MovieService {
 		return "Deleted Successfully";
 	}
 	
-	public Optional<MovieDetails> findById(int movie_id) throws MovieNotFoundException{
+	public Optional<MovieDetails> findById(long movie_id) throws MovieNotFoundException{
 		Optional<MovieDetails> findMovie = movieDetailsService.findById(movie_id);
 		if (findMovie!= null) {
 			return findMovie;
@@ -78,10 +78,10 @@ public class MovieService {
 		}
 	}
 
-	public Optional<Genre> findGenre(int movie_id) {
-		return genreRepository.findById(movie_id);
+	public Optional<Genre> findGenre(int genre_id) {
+		return genreRepository.findById((int) genre_id);
 	}
-
+ 
 	public Genre saveGenre(Genre genre) {
 		return genreRepository.save(genre);
 	}
