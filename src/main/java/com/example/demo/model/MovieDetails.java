@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "movie_details", schema = "movie_details")
@@ -55,6 +57,7 @@ public class MovieDetails {
 	@NotBlank
 	private String mediaPath;
 	
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY,
 		      cascade = {
 		          CascadeType.PERSIST,
@@ -64,7 +67,7 @@ public class MovieDetails {
 	@JoinTable(name = "movie_genres",schema = "movie_details",
 		      joinColumns = { @JoinColumn(name = "movie_id") },
 		      inverseJoinColumns = { @JoinColumn(name = "genre_id") })
-	private Set<Genre> genres = new HashSet<>();
+	private Set<Genre> genres;
 	
 	
 	@OneToMany(fetch = FetchType.LAZY,
@@ -186,6 +189,23 @@ public class MovieDetails {
 	public void setMedia_path(String media_path) {
 		this.mediaPath = media_path;
 	}
+
+//	public Set<Genre> getGenres() {
+//		return genres;
+//	}
+//
+//	public void setGenres(Set<Genre> genres) {
+//		this.genres = genres;
+//	}
+	
+
+//	public Set<Genre> getGenres() {
+//		return genres;
+//	}
+//
+//	public void setGenres(Set<Genre> genres) {
+//		this.genres = genres;
+//	}
 	
 	
 }

@@ -7,6 +7,7 @@ import com.example.demo.exception.MovieNotFoundException;
 import com.example.demo.model.Genre;
 //import com.example.demo.exception.MovieNotFound;
 import com.example.demo.model.MovieDetails;
+import com.example.demo.repository.GenreRepository;
 import com.example.demo.service.MovieService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -30,6 +32,9 @@ public class MovieController {
 	@Autowired
 	MovieService movieService;
 
+	@Autowired
+	GenreRepository genreRepo;
+	
 	@GetMapping(value = "/greet")
 	public String greet() {
 		return "Welcome";
@@ -37,7 +42,10 @@ public class MovieController {
 
 //	Create Movies
 	@PostMapping(value = "/create_movie")
-	public ResponseEntity<?> createMovie(@RequestBody MovieDetails movieDetails) {
+	public ResponseEntity<?> createMovie(@RequestBody MovieDetails movieDetails, @RequestParam List<Integer> id) {
+		id.forEach((Integer genre_id)->{
+			movieDetails.addGenre(genreRepo.findById(genre_id).get());
+		});
 		return movieService.save(movieDetails);
 		
 //		{
