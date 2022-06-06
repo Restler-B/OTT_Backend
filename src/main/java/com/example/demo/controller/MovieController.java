@@ -42,11 +42,9 @@ public class MovieController {
 
 //	Create Movies
 	@PostMapping(value = "/create_movie")
-	public ResponseEntity<?> createMovie(@RequestBody MovieDetails movieDetails, @RequestParam List<Integer> id) {
-		id.forEach((Integer genre_id)->{
-			movieDetails.addGenre(genreRepo.findById(genre_id).get());
-		});
+	public ResponseEntity<?> createMovie(@RequestBody MovieDetails movieDetails){
 		return movieService.save(movieDetails);
+		
 		
 //		{
 //	        "movie_name": "SpiderMan",
