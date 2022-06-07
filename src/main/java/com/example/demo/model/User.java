@@ -34,7 +34,7 @@ public class User {
   @Size(max = 120)
   private String password;
   
-  private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
+  private static final long OTP_VALID_DURATION = 5 * 60* 1000;   // 5 minutes
   
   @Column(name = "otp")
   private String oneTimePassword;
@@ -112,12 +112,14 @@ public class User {
 	 
     long currentTimeInMillis = System.currentTimeMillis();
     long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
+    
+    System.out.println( (otpRequestedTimeInMillis+OTP_VALID_DURATION)+"   " +currentTimeInMillis);
 	 
-    if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
+    if (otpRequestedTimeInMillis + OTP_VALID_DURATION  < currentTimeInMillis) {
 	    // OTP expires
-    	return false;
+    	return true;
     }
 	 
-    	return true;
+    	return false;
 	}
 }

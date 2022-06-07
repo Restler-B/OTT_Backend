@@ -70,4 +70,10 @@ public class OtpService {
         user.setOtpRequestedTime(null);
         userRepo.save(user);
     } 
+    
+    public boolean expired(User user) {
+    	return user.isOTPRequired();
+    	
+    } 
+    
 }

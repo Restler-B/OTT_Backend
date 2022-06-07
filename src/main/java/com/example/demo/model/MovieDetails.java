@@ -70,15 +70,6 @@ public class MovieDetails {
 	private Set<Genre> genres = new HashSet<>();
 	
 	
-	@OneToMany(fetch = FetchType.LAZY,
-			cascade = {
-		        CascadeType.PERSIST,
-					CascadeType.MERGE
-	})
-	@JoinTable(name = "movie_trailer",schema = "movie_details",
-	joinColumns = { @JoinColumn(name = "movie_id") },
-	inverseJoinColumns = { @JoinColumn(name = "trailer_id") })
-	private Set<Trailer> trailer = new HashSet<>();
 
 //
 //	public Set<Trailer> getTrailer() {

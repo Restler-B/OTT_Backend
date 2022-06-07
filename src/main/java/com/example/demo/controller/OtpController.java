@@ -61,6 +61,9 @@ public class OtpController {
 	    Boolean otp = userRepo.existsByOneTimePassword(otpRequest.getOneTimePassword());
 		if(email & otp == true){
 			User user = userRepo.findByEmail(otpRequest.getEmail());
+			if(!otpService.expired(user)) {
+				System.out.println(otpService.expired(user));
+				return ResponseEntity.ok(new MessageResponse("Credentials Mismatch!!!"));}
 			user.setPassword(passwordEncoder.encode(otpRequest.getPassword()));
 			userRepo.save(user);
 			otpService.clearOTP(user);
