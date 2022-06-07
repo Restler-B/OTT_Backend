@@ -132,11 +132,11 @@ public class GenreController {
 	  
 	  
 	  
-	  @PostMapping("/mapGenre/{movieId}")
-	  public void mapGenre(@PathVariable(value = "movieId") long movieId, @RequestBody List<Integer> genreRequest) throws MovieNotFoundException, GenreNotFoundException {
+	  @PostMapping("/mapGenre/{movieId}/{gen}")
+	  public void mapGenre(@PathVariable(value = "movieId") long movieId, @PathVariable(value = "gen") List<Integer> gen) throws MovieNotFoundException, GenreNotFoundException {
 		  MovieDetails movie = movieDetailsRepository.findById(movieId)
 				  .orElseThrow(()-> new GenreNotFoundException("Not Found genre with Id: " + movieId));
-		  genreRequest.forEach((Integer id)->{
+		  gen.forEach((Integer id)->{
 			  
 			  movie.addGenre(genreRepository.getById(id));
 		  });

@@ -81,6 +81,14 @@ public class MovieDetails {
 	private Set<Trailer> trailer = new HashSet<>();
 
 
+	public Set<Genre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(Set<Genre> genres) {
+		this.genres = genres;
+	}
+
 	public Set<Trailer> getTrailer() {
 		return trailer;
 	}
