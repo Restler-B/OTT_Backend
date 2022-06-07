@@ -42,36 +42,13 @@ public class MovieController {
 
 //	Create Movies
 	@PostMapping(value = "/create_movie")
+
 	public ResponseEntity<?> createMovie(@RequestBody MovieDetails movieDetails) {
-		System.out.println(",,,,,,,..."+movieDetails.getGenres());
 		return movieService.save(movieDetails);
-		
-//		{
-//		    "movie_name": "SpiderMan",
-//		    "movie_id": 6,
-//		    "movie_title": "SpiderMan",
-//		    "movie_description": "SpiderMan's Favourite",
-//		    "movie_budget": 3000000,
-//		    "m_release_date": "2012-10-09",
-//		    "m_revenue": 20000000,
-//		    "m_popularity": 3,
-//		    "posterPath": "/abcijk",
-//		    "backdrop_path": "/abcdijkl",
-//		    "media_path": "dssdc",
-//		    "genres": [
-//		        {
-//		            "id": 1
-//		        }
-//		    ],
-//		    "trailer": [
-//		        {
-//		            "thumbnailPath": "Action",
-//		            "trailerPath": "sdhjfgsjhdgf"
-//		        }
-//		    ]
-//		}
-		
 	};
+	
+	
+	
 	
 	@PutMapping(value = "/update_movie")
 	public ResponseEntity<?> updateMovie(@RequestBody MovieDetails movieDetails) throws MovieNotFoundException{

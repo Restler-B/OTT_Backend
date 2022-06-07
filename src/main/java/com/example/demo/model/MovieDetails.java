@@ -67,35 +67,7 @@ public class MovieDetails {
 	@JoinTable(name = "movie_genres",schema = "movie_details",
 		      joinColumns = { @JoinColumn(name = "movie_id") },
 		      inverseJoinColumns = { @JoinColumn(name = "genre_id") })
-	private Set<Genre> genres;
-	
-	
-	@OneToMany(fetch = FetchType.LAZY,
-			cascade = {
-//		        CascadeType.PERSIST,
-					CascadeType.MERGE
-	})
-	@JoinTable(name = "movie_trailer",schema = "movie_details",
-	joinColumns = { @JoinColumn(name = "movie_id") },
-	inverseJoinColumns = { @JoinColumn(name = "trailer_id") })
-	private Set<Trailer> trailer = new HashSet<>();
-
-
-	public Set<Genre> getGenres() {
-		return genres;
-	}
-
-	public void setGenres(Set<Genre> genres) {
-		this.genres = genres;
-	}
-
-	public Set<Trailer> getTrailer() {
-		return trailer;
-	}
-
-	public void setTrailer(Set<Trailer> trailer) {
-		this.trailer = trailer;
-	}
+	private Set<Genre> genres = new HashSet<>();
 	
 	public String getMovie_name() {
 		return movie_name;
@@ -207,9 +179,9 @@ public class MovieDetails {
 //	}
 	
 
-//	public Set<Genre> getGenres() {
-//		return genres;
-//	}
+	public Set<Genre> getGenres() {
+		return genres;
+	}
 //
 //	public void setGenres(Set<Genre> genres) {
 //		this.genres = genres;

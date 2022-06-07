@@ -18,21 +18,21 @@ import com.example.demo.repository.MovieDetailsRepository;
 public class MovieService {
 
 	@Autowired
-	private MovieDetailsRepository movieDetailsService;
+	private MovieDetailsRepository movieDetailRepository;
 	@Autowired
 	private GenreRepository genreRepository;
 
+	
 	public List<MovieDetails> findAll() {
-		return movieDetailsService.findAll();
+		return movieDetailRepository.findAll();
 	}
 
 	public ResponseEntity<?> save(MovieDetails movieDetails) {
 		System.out.println("***"+movieDetails.getMovie_id());
 		Long movie_id = movieDetails.getMovie_id();
-		Boolean movie = movieDetailsService.existsById(movie_id);
-		System.out.println(movie);
+		Boolean movie = movieDetailRepository.existsById(movie_id);
 		if (!movie) {
-			movieDetailsService.save(movieDetails);
+			movieDetailRepository.save(movieDetails);
 			return new ResponseEntity<>(movieDetails, HttpStatus.CREATED);
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).body("Movie already exists...");
@@ -40,8 +40,8 @@ public class MovieService {
 	
 	public ResponseEntity<?> updateMovie(MovieDetails movieDetails) throws MovieNotFoundException{
 		Long movie_id = movieDetails.getMovie_id();
-		if (movieDetailsService.existsById(movie_id)) {
-			movieDetailsService.save(movieDetails);
+		if (movieDetailRepository.existsById(movie_id)) {
+			movieDetailRepository.save(movieDetails);
 			return new ResponseEntity<>(movieDetails, HttpStatus.OK);
 		} else {
 			throw new MovieNotFoundException("Movie not found with ID" + movie_id);
@@ -50,13 +50,13 @@ public class MovieService {
 	
 	
 	public void saveAll(List<MovieDetails> Moviedetails) {
-		movieDetailsService.saveAll(Moviedetails);
+		movieDetailRepository.saveAll(Moviedetails);
 	}
 
 	public String deleteMovie(int movie_id) throws MovieNotFoundException {
-		Boolean md = movieDetailsService.existsById((long) movie_id);
+		Boolean md = movieDetailRepository.existsById((long) movie_id);
 		if (md == true) {
-			movieDetailsService.deleteById((long) movie_id);
+			movieDetailRepository.deleteById((long) movie_id);
 			return "Deleted Successfully";
 		}
 		else {
@@ -65,12 +65,12 @@ public class MovieService {
 	}
 		
 	public String deleteAll() {
-		movieDetailsService.deleteAll();
+		movieDetailRepository.deleteAll();
 		return "Deleted Successfully";
 	}
 	
 	public Optional<MovieDetails> findById(long movie_id) throws MovieNotFoundException{
-		Optional<MovieDetails> findMovie = movieDetailsService.findById(movie_id);
+		Optional<MovieDetails> findMovie = movieDetailRepository.findById(movie_id);
 		if (findMovie!= null) {
 			return findMovie;
 		}else {
