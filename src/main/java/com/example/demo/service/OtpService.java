@@ -72,7 +72,7 @@ public class OtpService {
     } 
     
     public boolean expired(User user) {
-    	return user.isOTPRequired();
+    	return user.isOTPExpired();
     	
     } 
     

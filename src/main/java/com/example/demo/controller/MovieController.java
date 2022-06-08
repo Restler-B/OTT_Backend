@@ -12,6 +12,7 @@ import com.example.demo.service.MovieService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +43,7 @@ public class MovieController {
 
 //	Create Movies
 	@PostMapping(value = "/create_movie")
-
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> createMovie(@RequestBody MovieDetails movieDetails) {
 		return movieService.save(movieDetails);
 	};
@@ -51,11 +52,13 @@ public class MovieController {
 	
 	
 	@PutMapping(value = "/update_movie")
+	@PreAuthorize("hhasRole('ADMIN')")
 	public ResponseEntity<?> updateMovie(@RequestBody MovieDetails movieDetails) throws MovieNotFoundException{
 		return movieService.updateMovie(movieDetails);
 	}
 	
 	@GetMapping(value = "/get_allmovies")
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<MovieDetails> getMovies() {
 		return movieService.findAll();
 	};
@@ -67,18 +70,21 @@ public class MovieController {
 //	};
 	
 	@DeleteMapping(value = "/delete_movie/id/{movie_id}")
+	@PreAuthorize(" hasRole('ADMIN')")
 	public String deleteMovie(@PathVariable (value = "movie_id") int movie_id) throws MovieNotFoundException {
 		movieService.deleteMovie(movie_id);
 		return "Movie Deleted";
 	};
 	
 	@DeleteMapping(value = "/delete_allmovies")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String deleteAll() {
 		movieService.deleteAll();
 		return "Movies Deleted";
 	};
 	
 	@GetMapping(value = "/get_movie_by_id/{movie_id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public Optional<MovieDetails> getMovie(@PathVariable int movie_id) throws MovieNotFoundException {
 		return movieService.findById(movie_id);
 	};

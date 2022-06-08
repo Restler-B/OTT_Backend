@@ -47,6 +47,7 @@ public class GenreController {
 	
 //	Ok
 	@PostMapping(value = "/add_genre")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String saveGenre(@RequestBody Genre genre) {
 		genreService.saveGenre(genre);
 		return "Genre Saved Successfully";
@@ -57,6 +58,7 @@ public class GenreController {
 //	Get all genres
 //	ok
 	@GetMapping("/genres")
+	@PreAuthorize("hasRole('ADMIN')")
 	  public ResponseEntity<List<Genre>> getAllgenres() {
 	    List<Genre> Genre = new ArrayList<Genre>();
 	    genreRepository.findAll().forEach(Genre::add);
@@ -68,6 +70,7 @@ public class GenreController {
 	
 //	Get All Genres By Movie Id
 	@GetMapping("/{movieId}/genresById")
+	@PreAuthorize("hasRole('ADMIN')")
 	  public ResponseEntity<List<Genre>> getAllGenresByMovieId(@PathVariable(value = "movieId") int movieId) throws MovieNotFoundException {
 	    if (!movieDetailsRepository.existsById(movieId)) {
 	      throw new MovieNotFoundException("Not found Movie with id = " + movieId);
@@ -83,8 +86,8 @@ public class GenreController {
 //	USER
 //	Get All movies by genre_id
 //	Not Satisfied
-	  @GetMapping("/genres/{genreId}")
-//	  @PreAuthorize("hasRole('USER')")
+	  @GetMapping("allow/genres/{genreId}")
+//	  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	  public ResponseEntity<Genre> getGenresById(@PathVariable(value = "genreId") int genreId) throws GenreNotFoundException {
 		  Genre genre = genreRepository.findById(genreId)
 	        .orElseThrow(() -> new GenreNotFoundException("Not found genre with id = " + genreId));
@@ -105,6 +108,7 @@ public class GenreController {
 //	  Ok
 //	  Add Genres to existing movies
 	  @PostMapping("/{movieId}/genres")
+	  @PreAuthorize("hasRole('ADMIN')")
 	  public ResponseEntity<Genre> addGenre(@PathVariable(value = "movieId") long movieId, @RequestBody Genre genreRequest) throws MovieNotFoundException, GenreNotFoundException{
 		  Genre genre = movieDetailsRepository.findById(movieId).map(movie -> {
 			  Integer genreId = genreRequest.getId();
@@ -133,6 +137,7 @@ public class GenreController {
 	  
 	  
 	  @PostMapping("/mapGenre/{movieId}/{gen}")
+	  @PreAuthorize("hasRole('ADMIN')")
 	  public void mapGenre(@PathVariable(value = "movieId") long movieId, @PathVariable(value = "gen") List<Integer> gen) throws MovieNotFoundException, GenreNotFoundException {
 		  MovieDetails movie = movieDetailsRepository.findById(movieId)
 				  .orElseThrow(()-> new GenreNotFoundException("Not Found genre with Id: " + movieId));
@@ -151,6 +156,7 @@ public class GenreController {
 //	  Updating a Genre
 //	  Ok
 	  @PutMapping("/update/genres/{id}")
+	  @PreAuthorize("hasRole('ADMIN')")
 	  public ResponseEntity<Genre> updateGenre(@PathVariable("id") Integer id, @RequestBody Genre genreRequest) throws GenreNotFoundException  {
 	    Genre genre = genreRepository.findById(id)
 	        .orElseThrow(() -> new GenreNotFoundException("genreId " + id + "not found"));
@@ -164,6 +170,7 @@ public class GenreController {
 	  }
 	 
 	  @DeleteMapping("/{movieId}/genres/{genreId}")
+	  @PreAuthorize("hasRole('ADMIN')")
 	  public ResponseEntity<HttpStatus> deleteGenreFromMovie(@PathVariable(value = "movieId") long movieId, @PathVariable(value = "genreId") Long genreId) throws MovieNotFoundException {
 	    MovieDetails movie = movieDetailsRepository.findById(movieId)
 	        .orElseThrow(() -> new MovieNotFoundException("Not found Movie with id = " + movieId));
@@ -175,6 +182,7 @@ public class GenreController {
 	  }
 	  
 	  @DeleteMapping("/delete/genres/{id}")
+	  @PreAuthorize("hasRole('ADMIN')")
 	  public ResponseEntity<HttpStatus> deleteGenre(@PathVariable("id") Integer id) {
 	    genreRepository.deleteById(id);
 	    return new ResponseEntity<>(HttpStatus.NO_CONTENT);

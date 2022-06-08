@@ -105,7 +105,7 @@ public class User {
 	this.otpRequestedTime = otpRequestedTime;
   }
 	
-  public boolean isOTPRequired() {
+  public boolean isOTPExpired() {
     if (this.getOneTimePassword() == null) {
 	        return false;
     }
@@ -117,9 +117,9 @@ public class User {
 	 
     if (otpRequestedTimeInMillis + OTP_VALID_DURATION  < currentTimeInMillis) {
 	    // OTP expires
-    	return true;
+    	return false;
     }
 	 
-    	return false;
+    	return true;
 	}
 }
